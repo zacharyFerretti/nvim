@@ -18,4 +18,4 @@ Recreate a lot of what I like with LazyVim but from scratch, gain a deeper under
 ----
 
 ## References
-- [[keymaps.md]] - See the keymaps in use here.
+- [Keymaps.md](keymaps.md) - See the keymaps in use here.
