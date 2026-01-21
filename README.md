@@ -12,8 +12,7 @@ Recreate a lot of what I like with LazyVim but from scratch, gain a deeper under
 3. **General**
     1. `kanagawa` - Color Scheme of choice.
     2. `neo-tree` - UI for file explorer to replace `netrw`. 
-    3. `sessions` - Save sessions (*might delete soon - having a hard time getting it to work well with neo-tree*).
-    4. `which-key` - Major help figuring out and remembering key-binds!  
+    3. `which-key` - Major help figuring out and remembering key-binds!  
 
 ----
 
