@@ -7,6 +7,10 @@ vim.opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpo
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- Sets the conceal level to 1 to enable Obsidian advanced
+-- synytax highlighting.
+vim.opt.conceallevel = 1
+
 --- DUMPING GROUND ---
 --- Old configs I don't want to get rid of in case I want them some day (such as clear backgrounds).
 
