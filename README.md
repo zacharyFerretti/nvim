@@ -16,5 +16,41 @@ Recreate a lot of what I like with LazyVim but from scratch, gain a deeper under
 
 ----
 
+## Dependencies
+
+### LSP Servers
+LSP servers are managed by **Mason** and will be installed automatically on first launch:
+- `cssls` - CSS
+- `html` - HTML
+- `jdtls` - Java
+- `jsonls` - JSON
+- `lua_ls` - Lua
+- `marksman` - Markdown
+- `pyright` - Python
+- `rust_analyzer` - Rust
+- `ts_ls` - TypeScript/JavaScript
+
+### Formatters
+Formatters must be installed on your system (conform.nvim does not auto-install them):
+
+| Language   | Formatter            | Install Command                          |
+|------------|----------------------|------------------------------------------|
+| CSS        | `prettier`           | `npm install -g prettier`                |
+| HTML       | `prettier`           | `npm install -g prettier`                |
+| JSON       | `prettier`           | `npm install -g prettier`                |
+| Markdown   | `prettier`           | `npm install -g prettier`                |
+| Java       | `google-java-format` | [GitHub Releases](https://github.com/google/google-java-format/releases) |
+| Lua        | `stylua`             | `cargo install stylua` or `brew install stylua` |
+| Python     | `black`              | `pip install black`                      |
+| Rust       | `rustfmt`            | `rustup component add rustfmt`           |
+
+### System Requirements
+- **Node.js/npm** - Required for `prettier` and several LSP servers
+- **Python/pip** - Required for `black` and `pyright`
+- **Rust/Cargo** - Required for `stylua`, `rustfmt`, and `rust_analyzer`
+- **Java JDK** - Required for `jdtls` and `google-java-format`
+
+----
+
 ## References
 - [Keymaps.md](keymaps.md) - See the keymaps in use here.
