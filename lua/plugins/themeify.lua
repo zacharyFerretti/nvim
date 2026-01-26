@@ -9,6 +9,7 @@ return {
       "sainnhe/gruvbox-material",
       "sainnhe/everforest",
       "sainnhe/edge",
+      "e-ink-colorscheme/e-ink.nvim",
     },
   },
 }

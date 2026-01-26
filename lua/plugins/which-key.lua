@@ -64,6 +64,12 @@ return {
         desc = "Word Under Cursor",
         icon = { icon = "", color = "purple" },
       },
+      {
+	      "<leader>T",
+	      "<cmd>Themify<CR>",
+	      desc = "Color Scheme Selection", 
+	      icon = { icon = "", color = "yellow" },
+      }
     })
   end,
 }
