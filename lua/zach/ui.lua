@@ -11,6 +11,16 @@ vim.opt.relativenumber = true
 -- synytax highlighting.
 vim.opt.conceallevel = 1
 
+-- Markdown folding
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
+  callback = function()
+    vim.opt_local.foldmethod = 'expr'
+    vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.opt_local.foldlevel = 99
+  end,
+})
+
 --- DUMPING GROUND ---
 --- Old configs I don't want to get rid of in case I want them some day (such as clear backgrounds).
 
