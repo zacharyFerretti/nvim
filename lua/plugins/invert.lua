@@ -1,8 +1,12 @@
 return {
   {
     "zacharyFerretti/nvim-invert",
-    config = function()
-      require("invert").setup()
+    opts = {
+      keymap = "<leader>ut",
+      persist = true,
+    },
+    config = function(_, opts)
+      require("invert").setup(opts)
     end,
   },
 }

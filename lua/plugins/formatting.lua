@@ -11,10 +11,13 @@ return {
         markdown = { "prettier" },
         python = { "black" },
         rust = { "rustfmt" },
+        sql = { "sql_formatter" },
+      },
+      formatters = {
+        sql_formatter = {
+          command = "sql-formatter",
+        },
       },
     })
-    vim.keymap.set("n", "<leader>o", function()
-      require("conform").format()
-    end)
   end,
 }

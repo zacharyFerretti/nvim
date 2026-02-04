@@ -8,4 +8,11 @@ return {
       build = "make",
     },
   },
+  config = function()
+    require("telescope").setup({
+      defaults = {
+        file_ignore_patterns = { "%.git/" },
+      },
+    })
+  end,
 }

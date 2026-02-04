@@ -37,13 +37,15 @@ return {
       -- Keybindings on LSP attach
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
-          local opts = { buffer = args.buf }
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-          vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+          local buf = args.buf
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = buf, desc = "Go to Definition" })
+          vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = buf, desc = "Hover Documentation" })
+          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code Action" })
+          -- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = buf, desc = "Rename Symbol" })
+          vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, { buffer = buf, desc = "Rename Symbol" })
+          vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = buf, desc = "Find References" })
+          -- vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { buffer = buf, desc = "Line Diagnostics" })
+          vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { buffer = buf, desc = "Line Diagnostics" })
         end,
       })
 

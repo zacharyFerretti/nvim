@@ -13,7 +13,7 @@ return {
       function()
         require("which-key").show({ global = false })
       end,
-      desc = "Buffer Local Keymaps (which-key)",
+      desc = "Local Keymaps",
     },
   },
   config = function(_, opts)
@@ -26,6 +26,16 @@ return {
         "<cmd>Neotree toggle reveal<CR>",
         desc = "File Explorer",
         icon = { icon = "", color = "blue" },
+      },
+
+      -- Buffer Sub Group (dynamic expansion shows all open buffers)
+      {
+        "<leader>b",
+        group = "Buffer",
+        icon = { icon = "", color = "cyan" },
+        expand = function()
+          return require("which-key.extras").expand.buf()
+        end,
       },
 
       -- Window Sub Groups
@@ -64,12 +74,32 @@ return {
         desc = "Word Under Cursor",
         icon = { icon = "", color = "purple" },
       },
+      -- Super Commands
+      { "<leader><Space>", group = "Super", icon = { icon = "", color = "red" } },
       {
-	      "<leader>T",
-	      "<cmd>Themify<CR>",
-	      desc = "Color Scheme Selection", 
-	      icon = { icon = "", color = "yellow" },
-      }
+        "<leader><Space>o",
+        "<cmd>Telescope find_files hidden=true<CR>",
+        desc = "Find Files",
+        icon = { icon = "", color = "red" },
+      },
+      { "<leader><Space><Enter>", vim.lsp.buf.code_action, desc = "Code Action", icon = { icon = "", color = "red" } },
+      {
+        "<leader><Space>m",
+        function()
+          require("conform").format()
+        end,
+        desc = "Format File",
+        icon = { icon = "", color = "red" },
+      },
+      {
+        "<leader>uT",
+        "<cmd>Themify<CR>",
+        desc = "Color Scheme Selection",
+        icon = { icon = "", color = "yellow" },
+      },
+      { "<leader>m", group = "Markdown" },
+      { "<leader>u", group = "UI" },
+      { "<leader>c", group = "Code" },
     })
   end,
 }
