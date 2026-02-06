@@ -46,7 +46,23 @@ return {
       { "<leader>wk", "<C-w>k", desc = "Up", icon = { icon = "", color = "green" } },
       { "<leader>ws", "<cmd>split<CR>", desc = "Split horizontal", icon = { icon = "", color = "green" } },
       { "<leader>wv", "<cmd>vsplit<CR>", desc = "Split vertical", icon = { icon = "", color = "green" } },
-      { "<leader>wx", "<cmd>close<CR>", desc = "Close window", icon = { icon = "", color = "green" } },
+      {
+        "<leader>wx",
+        function()
+          local bufs = vim.tbl_filter(function(b)
+            return vim.api.nvim_buf_is_loaded(b) and vim.bo[b].buflisted
+          end, vim.api.nvim_list_bufs())
+          if #bufs <= 1 then
+            vim.cmd("Dashboard")
+          else
+            local buf = vim.api.nvim_get_current_buf()
+            vim.cmd("BufferLineCyclePrev")
+            vim.api.nvim_buf_delete(buf, {})
+          end
+        end,
+        desc = "Close buffer",
+        icon = { icon = "", color = "green" },
+      },
 
       -- Telescope (Live Grep)
       { "<leader>/", "<cmd>Telescope live_grep<CR>", desc = "Live Grep", icon = { icon = "󰐰", color = "purple" } },
