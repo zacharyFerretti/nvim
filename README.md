@@ -44,7 +44,18 @@ Formatters must be installed on your system (conform.nvim does not auto-install 
 | Python     | `black`              | `pip install black`                      |
 | Rust       | `rustfmt`            | `rustup component add rustfmt`           |
 
+### Tree-sitter
+The `nvim-treesitter` plugin (main branch) requires the **Tree-sitter CLI** to compile parsers:
+
+| Package          | Install Command           |
+|------------------|---------------------------|
+| `tree-sitter`    | `brew install tree-sitter` |
+| `tree-sitter-cli`| `brew install tree-sitter-cli` |
+
+Parsers are compiled on first launch and cached for subsequent sessions.
+
 ### System Requirements
+- **Tree-sitter CLI** - Required for compiling treesitter parsers
 - **Node.js/npm** - Required for `prettier` and several LSP servers
 - **Python/pip** - Required for `black` and `pyright`
 - **Rust/Cargo** - Required for `stylua`, `rustfmt`, and `rust_analyzer`

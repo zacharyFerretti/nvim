@@ -1,2 +1,2 @@
-require("zach")
+require("core.options")
 require("config.lazy")
