@@ -63,6 +63,8 @@ return {
         desc = "Close buffer",
         icon = { icon = "", color = "green" },
       },
+      { "<leader>wd", "<cmd>close<CR>", desc = "Delete window", icon = { icon = "", color = "green" } },
+
 
       -- Telescope (Live Grep)
       { "<leader>/", "<cmd>Telescope live_grep<CR>", desc = "Live Grep", icon = { icon = "󰐰", color = "purple" } },
