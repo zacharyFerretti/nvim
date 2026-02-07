@@ -19,6 +19,16 @@ vim.opt.conceallevel = 1
 -- Session options for auto-session
 vim.opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
+-- Lua indent (match stylua 2-space default)
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'lua',
+  callback = function()
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+    vim.opt_local.expandtab = true
+  end,
+})
+
 -- Markdown folding via Treesitter
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'markdown',
