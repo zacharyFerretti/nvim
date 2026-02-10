@@ -38,3 +38,33 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.foldlevel = 99
   end,
 })
+
+-- Toggle transparent background (<leader>uo), off by default
+vim.g.transparent_bg = false
+
+local function set_transparent(enabled)
+  if enabled then
+    vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
+    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE", ctermbg = "NONE" })
+    vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "NONE", ctermbg = "NONE" })
+    vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "NONE", ctermbg = "NONE" })
+  else
+    -- Re-apply the colorscheme to restore original backgrounds
+    vim.cmd.colorscheme(vim.g.colors_name)
+  end
+end
+
+vim.keymap.set("n", "<leader>uo", function()
+  vim.g.transparent_bg = not vim.g.transparent_bg
+  set_transparent(vim.g.transparent_bg)
+  vim.notify("Transparent background: " .. (vim.g.transparent_bg and "ON" or "OFF"))
+end, { desc = "Toggle transparent background" })
+
+-- Re-apply transparency after colorscheme changes (if enabled)
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    if vim.g.transparent_bg then
+      set_transparent(true)
+    end
+  end,
+})
