@@ -47,7 +47,11 @@ return {
           -- vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { buffer = buf, desc = "Line Diagnostics" })
           vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { buffer = buf, desc = "Line Diagnostics" })
           vim.keymap.set("n", "<leader>cg", vim.lsp.buf.definition, { buffer = buf, desc = "Go to Definition" })
-          vim.keymap.set("n", "<leader>cu", vim.lsp.buf.references, { buffer = buf, desc = "Usages" })
+          vim.keymap.set("n", "<leader>cu", function()
+            require("telescope.builtin").lsp_references({
+              include_declaration = false,
+            })
+          end, { buffer = buf, desc = "Usages" })
         end,
       })
 
