@@ -32,7 +32,7 @@ return {
     dependencies = { "mason-lspconfig.nvim" },
     config = function()
       -- Enable servers
-      vim.lsp.enable({ "cssls", "html", "jdtls", "jsonls", "lua_ls", "marksman", "pyright", "rust_analyzer", "ts_ls" })
+      vim.lsp.enable({ "cssls", "html", "jsonls", "lua_ls", "marksman", "pyright", "rust_analyzer", "ts_ls" })
 
       -- Keybindings on LSP attach
       vim.api.nvim_create_autocmd("LspAttach", {

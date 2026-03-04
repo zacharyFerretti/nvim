@@ -12,6 +12,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.fillchars = { eob = " " }
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.termguicolors = true
 
 -- Conceal level for Obsidian advanced syntax highlighting
 vim.opt.conceallevel = 1
@@ -25,6 +26,16 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function()
     vim.opt_local.shiftwidth = 2
     vim.opt_local.tabstop = 2
+    vim.opt_local.expandtab = true
+  end,
+})
+
+-- Java indent (match AOSP 4-space style)
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'java',
+  callback = function()
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.tabstop = 4
     vim.opt_local.expandtab = true
   end,
 })
