@@ -117,6 +117,7 @@ return {
       },
       { "<leader>m", group = "Markdown" },
       { "<leader>u", group = "UI" },
+      { "<leader>up", icon = { icon = "", color = "cyan" } },
       { "<leader>c", group = "Code" },
     })
   end,

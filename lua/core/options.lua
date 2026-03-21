@@ -50,8 +50,8 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- Toggle transparent background (<leader>uo), off by default
-vim.g.transparent_bg = false
+-- Toggle transparent background (<leader>uo), persisted across sessions
+local _transparent_state_file = vim.fn.stdpath("data") .. "/transparent_bg"
 
 local function set_transparent(enabled)
   if enabled then
@@ -60,14 +60,29 @@ local function set_transparent(enabled)
     vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "NONE", ctermbg = "NONE" })
     vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "NONE", ctermbg = "NONE" })
   else
-    -- Re-apply the colorscheme to restore original backgrounds
     vim.cmd.colorscheme(vim.g.colors_name)
   end
 end
 
+-- Load persisted state
+vim.g.transparent_bg = vim.uv.fs_stat(_transparent_state_file) ~= nil
+-- Apply after colorscheme loads (VimEnter ensures colorscheme is active)
+vim.api.nvim_create_autocmd("VimEnter", {
+  once = true,
+  callback = function()
+    if vim.g.transparent_bg then set_transparent(true) end
+  end,
+})
+
 vim.keymap.set("n", "<leader>uo", function()
   vim.g.transparent_bg = not vim.g.transparent_bg
   set_transparent(vim.g.transparent_bg)
+  -- Persist by creating or removing the flag file
+  if vim.g.transparent_bg then
+    io.open(_transparent_state_file, "w"):close()
+  else
+    vim.uv.fs_unlink(_transparent_state_file)
+  end
   vim.notify("Transparent background: " .. (vim.g.transparent_bg and "ON" or "OFF"))
 end, { desc = "Toggle transparent background" })
 
