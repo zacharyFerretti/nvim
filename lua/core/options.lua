@@ -2,6 +2,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- Lower timeout so which-key popup triggers reliably
+vim.opt.timeoutlen = 300
+
 -- Clear search highlight with Escape
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 
@@ -27,6 +30,14 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.shiftwidth = 2
     vim.opt_local.tabstop = 2
     vim.opt_local.expandtab = true
+  end,
+})
+
+-- Shell indent (disable Treesitter indentexpr — bash parser over-indents)
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'sh', 'bash', 'zsh' },
+  callback = function()
+    vim.opt_local.indentexpr = ''
   end,
 })
 

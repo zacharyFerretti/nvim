@@ -12,9 +12,13 @@ return {
         markdown = { "prettier" },
         python = { "black" },
         rust = { "rustfmt" },
+        sh = { "shfmt" },
         sql = { "sql_formatter" },
       },
       formatters = {
+        shfmt = {
+          prepend_args = { "-i", "4" },
+        },
         ["google-java-format"] = {
           prepend_args = { "--aosp" },
         },

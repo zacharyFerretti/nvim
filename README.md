@@ -43,6 +43,7 @@ Formatters must be installed on your system (conform.nvim does not auto-install 
 | Lua        | `stylua`             | `cargo install stylua` or `brew install stylua` |
 | Python     | `black`              | `pip install black`                      |
 | Rust       | `rustfmt`            | `rustup component add rustfmt`           |
+| Shell      | `shfmt`              | `sudo pacman -S shfmt` or `go install mvdan.cc/sh/v3/cmd/shfmt@latest` |
 
 ### Tree-sitter
 The `nvim-treesitter` plugin (main branch) requires the **Tree-sitter CLI** to compile parsers:

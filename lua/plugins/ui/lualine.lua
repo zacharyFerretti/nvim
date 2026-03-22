@@ -16,7 +16,13 @@ return {
       lualine_c = {
         { "filename", path = 1 },
       },
-      lualine_x = {},
+      lualine_x = {
+        {
+          function() return "recording @" .. vim.fn.reg_recording() end,
+          cond = function() return vim.fn.reg_recording() ~= "" end,
+          color = { fg = "#ff5555", gui = "bold" },
+        },
+      },
     },
   },
 }
