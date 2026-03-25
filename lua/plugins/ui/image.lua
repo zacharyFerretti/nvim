@@ -51,6 +51,23 @@ local function close_preview()
   end
   _preview_win = nil
   _preview_buf = nil
+  -- Kitty graphics persist at the terminal layer; delete all placements.
+  if vim.env.TMUX then
+    -- tmux's /dev/tty is its own PTY, not Kitty's. Ask tmux for the real TTY
+    -- and write the delete-all escape there directly.
+    local client_tty = vim.fn.system("tmux display-message -p '#{client_tty}'"):gsub("%s+$", "")
+    if client_tty ~= "" then
+      vim.fn.system({ "sh", "-c", "printf '\\033_Ga=d,d=A\\033\\\\' > " .. client_tty })
+    end
+  else
+    local tty = io.open("/dev/tty", "w")
+    if tty then
+      tty:write("\x1b_Ga=d,d=A\x1b\\")
+      tty:flush()
+      tty:close()
+    end
+  end
+  vim.cmd("redraw!")
 end
 
 local function preview_image_under_cursor()
@@ -99,7 +116,7 @@ local function preview_image_under_cursor()
 
   -- Register close autocmd immediately — cursor move dismisses even mid-load
   local augroup = vim.api.nvim_create_augroup("ImagePreviewClose", { clear = true })
-  vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufLeave" }, {
+  vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufLeave", "FocusLost" }, {
     group = augroup,
     once = true,
     callback = close_preview,
@@ -166,6 +183,7 @@ return {
   opts = {
     backend = "kitty",        -- Kitty Graphics Protocol; works on both Kitty and Ghostty
     processor = "magick_cli", -- uses ImageMagick CLI instead of luarocks binding (avoids Lua 5.4 compat issues)
+    kitty_method = "normal",
     integrations = {},        -- no automatic rendering; preview is manual via <leader>up
     max_width = MAX_COLS,
     max_height = MAX_ROWS,
