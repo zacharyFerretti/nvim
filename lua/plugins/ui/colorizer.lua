@@ -2,8 +2,8 @@ return {
   "NvChad/nvim-colorizer.lua",
   event = { "BufReadPre", "BufNewFile" },
   opts = {
-    suppress_deprecation = true,
     user_default_options = {
+      suppress_deprecation = true,
       rgb_fn = true,  -- enables rgb(r, g, b) parsing
       hsl_fn = true,  -- enables hsl() if you want it
       css = true,     -- enables all CSS features

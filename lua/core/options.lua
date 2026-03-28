@@ -61,15 +61,20 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- Toggle transparent background (<leader>uo), persisted across sessions
-local _transparent_state_file = vim.fn.stdpath("data") .. "/transparent_bg"
+-- Toggle transparent background (<leader>uo), persisted via ShaDa
 
 local function set_transparent(enabled)
   if enabled then
-    vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
-    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE", ctermbg = "NONE" })
-    vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "NONE", ctermbg = "NONE" })
-    vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "NONE", ctermbg = "NONE" })
+    local none = { bg = "NONE", ctermbg = "NONE" }
+    vim.api.nvim_set_hl(0, "Normal", none)
+    vim.api.nvim_set_hl(0, "NormalNC", none)
+    vim.api.nvim_set_hl(0, "NormalFloat", none)
+    vim.api.nvim_set_hl(0, "SignColumn", none)
+    vim.api.nvim_set_hl(0, "EndOfBuffer", none)
+    vim.api.nvim_set_hl(0, "NeoTreeNormal", none)
+    vim.api.nvim_set_hl(0, "NeoTreeNormalNC", none)
+    vim.api.nvim_set_hl(0, "NeoTreeEndOfBuffer", none)
+    vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", none)
   else
     vim.cmd.colorscheme(vim.g.colors_name)
   end
@@ -86,21 +91,24 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 
 vim.keymap.set("n", "<leader>uo", function()
-  vim.g.transparent_bg = not vim.g.transparent_bg
-  set_transparent(vim.g.transparent_bg)
-  -- Persist by creating or removing the flag file
-  if vim.g.transparent_bg then
-    io.open(_transparent_state_file, "w"):close()
-  else
-    vim.uv.fs_unlink(_transparent_state_file)
-  end
-  vim.notify("Transparent background: " .. (vim.g.transparent_bg and "ON" or "OFF"))
+  vim.g.TRANSPARENT_BG = not vim.g.TRANSPARENT_BG
+  set_transparent(vim.g.TRANSPARENT_BG)
+  vim.notify("Transparent background: " .. (vim.g.TRANSPARENT_BG and "ON" or "OFF"))
 end, { desc = "Toggle transparent background" })
+
+-- Restore persisted transparency after ShaDa is loaded
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    if vim.g.TRANSPARENT_BG then
+      set_transparent(true)
+    end
+  end,
+})
 
 -- Re-apply transparency after colorscheme changes (if enabled)
 vim.api.nvim_create_autocmd("ColorScheme", {
   callback = function()
-    if vim.g.transparent_bg then
+    if vim.g.TRANSPARENT_BG then
       set_transparent(true)
     end
   end,
