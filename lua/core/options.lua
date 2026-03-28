@@ -80,22 +80,6 @@ local function set_transparent(enabled)
   end
 end
 
--- Load persisted state
-vim.g.transparent_bg = vim.uv.fs_stat(_transparent_state_file) ~= nil
--- Apply after colorscheme loads (VimEnter ensures colorscheme is active)
-vim.api.nvim_create_autocmd("VimEnter", {
-  once = true,
-  callback = function()
-    if vim.g.transparent_bg then set_transparent(true) end
-  end,
-})
-
-vim.keymap.set("n", "<leader>uo", function()
-  vim.g.TRANSPARENT_BG = not vim.g.TRANSPARENT_BG
-  set_transparent(vim.g.TRANSPARENT_BG)
-  vim.notify("Transparent background: " .. (vim.g.TRANSPARENT_BG and "ON" or "OFF"))
-end, { desc = "Toggle transparent background" })
-
 -- Restore persisted transparency after ShaDa is loaded
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
@@ -104,6 +88,12 @@ vim.api.nvim_create_autocmd("VimEnter", {
     end
   end,
 })
+
+vim.keymap.set("n", "<leader>uo", function()
+  vim.g.TRANSPARENT_BG = not vim.g.TRANSPARENT_BG
+  set_transparent(vim.g.TRANSPARENT_BG)
+  vim.notify("Transparent background: " .. (vim.g.TRANSPARENT_BG and "ON" or "OFF"))
+end, { desc = "Toggle transparent background" })
 
 -- Re-apply transparency after colorscheme changes (if enabled)
 vim.api.nvim_create_autocmd("ColorScheme", {
