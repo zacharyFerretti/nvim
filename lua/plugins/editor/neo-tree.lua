@@ -8,6 +8,11 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     opts = {
+      filesystem = {
+        filtered_items = {
+          visible = true,
+        },
+      },
       event_handlers = {
         {
           event = "neo_tree_buffer_enter",
