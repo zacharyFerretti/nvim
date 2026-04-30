@@ -20,6 +20,12 @@ vim.opt.termguicolors = true
 -- Conceal level for Obsidian advanced syntax highlighting
 vim.opt.conceallevel = 1
 
+-- Folding (nvim-ufo takes over foldmethod/foldexpr)
+vim.opt.foldcolumn = '1'
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
+
 -- Session options for auto-session
 vim.opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
@@ -48,16 +54,6 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.shiftwidth = 4
     vim.opt_local.tabstop = 4
     vim.opt_local.expandtab = true
-  end,
-})
-
--- Markdown folding via Treesitter
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'markdown',
-  callback = function()
-    vim.opt_local.foldmethod = 'expr'
-    vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-    vim.opt_local.foldlevel = 99
   end,
 })
 
