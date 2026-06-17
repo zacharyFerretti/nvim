@@ -19,6 +19,7 @@ require("jdtls").start_or_attach({
     "-data", workspace_dir,
   },
   root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
+  capabilities = require("cmp_nvim_lsp").default_capabilities(),
   settings = {
     java = {},
   },

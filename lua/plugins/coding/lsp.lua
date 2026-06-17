@@ -33,6 +33,8 @@ return {
     config = function()
       -- Enable servers
       vim.lsp.enable({ "cssls", "html", "jsonls", "lua_ls", "marksman", "pyright", "rust_analyzer", "ts_ls" })
+      -- 2026-06-03: Disable lspconfig's jdtls to prevent duplicate instance (nvim-jdtls in ftplugin/java.lua manages it)
+      vim.lsp.enable("jdtls", false)
 
       -- Keybindings on LSP attach
       vim.api.nvim_create_autocmd("LspAttach", {
