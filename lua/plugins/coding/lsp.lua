@@ -11,18 +11,9 @@ return {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "mason.nvim" },
     config = function()
+      -- Only install servers for languages enabled on this machine (see config.languages)
       require("mason-lspconfig").setup({
-        ensure_installed = {
-          "cssls",
-          "html",
-          "jdtls",
-          "jsonls",
-          "lua_ls",
-          "marksman",
-          "pyright",
-          "rust_analyzer",
-          "ts_ls",
-        },
+        ensure_installed = require("config.languages").lsp_servers(),
       })
     end,
   },
@@ -31,8 +22,8 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = { "mason-lspconfig.nvim" },
     config = function()
-      -- Enable servers
-      vim.lsp.enable({ "cssls", "html", "jsonls", "lua_ls", "marksman", "pyright", "rust_analyzer", "ts_ls" })
+      -- Enable servers for enabled languages only
+      vim.lsp.enable(require("config.languages").lsp_servers())
       -- 2026-06-03: Disable lspconfig's jdtls to prevent duplicate instance (nvim-jdtls in ftplugin/java.lua manages it)
       vim.lsp.enable("jdtls", false)
 

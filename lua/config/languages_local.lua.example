@@ -1,0 +1,26 @@
+-- Per-machine language toggles. COPY this file to `languages_local.lua`
+-- (same directory) and edit. `languages_local.lua` is gitignored, so it stays
+-- local to this machine and never conflicts across machines.
+--
+-- Only list languages you want to CHANGE from the default (everything enabled).
+-- Setting one to false skips its LSP server and formatters here, so the config
+-- won't error when that toolchain is missing. Treesitter highlighting stays on
+-- regardless.
+--
+-- Example for a machine without dev toolchains installed. Note that css/html/
+-- json LSPs and the `prettier` formatter also need Node -- disable those too if
+-- Node isn't present.
+
+return {
+  go = false,
+  java = false,
+  rust = false,
+  python = false,
+  typescript = false,
+  kotlin = false,
+  sql = false,
+  -- css = false,   -- uncomment these if you have no Node runtime
+  -- html = false,
+  -- json = false,
+  -- markdown = false,
+}

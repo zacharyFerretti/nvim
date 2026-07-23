@@ -16,22 +16,41 @@ Recreate a lot of what I like with LazyVim but from scratch, gain a deeper under
 
 ----
 
+## Per-machine language toggles
+
+Language support (LSP servers + formatters) is driven by a single registry,
+[`lua/config/languages.lua`](lua/config/languages.lua), and can be enabled or
+disabled **per machine** so the config doesn't error where a toolchain is
+missing (no JDK, no Node, no Go, etc.). All languages default to enabled; create
+a gitignored `lua/config/languages_local.lua` to turn off what a given machine
+lacks. Treesitter highlighting always stays on.
+
+See **[languages_local.md](languages_local.md)** for full setup instructions.
+
+----
+
 ## Dependencies
 
 ### LSP Servers
-LSP servers are managed by **Mason** and will be installed automatically on first launch:
-- `cssls` - CSS
-- `html` - HTML
-- `jdtls` - Java
-- `jsonls` - JSON
-- `lua_ls` - Lua
-- `marksman` - Markdown
-- `pyright` - Python
-- `rust_analyzer` - Rust
-- `ts_ls` - TypeScript/JavaScript
+LSP servers are managed by **Mason** and installed automatically on first launch,
+for each language enabled in `lua/config/languages.lua`:
+
+| Language              | Server          | Runtime needed |
+|-----------------------|-----------------|----------------|
+| CSS                   | `cssls`         | Node           |
+| HTML                  | `html`          | Node           |
+| JSON                  | `jsonls`        | Node           |
+| Markdown              | `marksman`      | —              |
+| Lua                   | `lua_ls`        | —              |
+| Go                    | `gopls`         | Go             |
+| Python                | `pyright`       | Node           |
+| Rust                  | `rust_analyzer` | Rust           |
+| TypeScript/JavaScript | `ts_ls`         | Node           |
+| Java                  | `jdtls`         | Java JDK       |
 
 ### Formatters
-Formatters must be installed on your system (conform.nvim does not auto-install them):
+Formatters must be installed on your system (conform.nvim does not auto-install
+them). Each is only used when its language is enabled:
 
 | Language   | Formatter            | Install Command                          |
 |------------|----------------------|------------------------------------------|
@@ -39,11 +58,14 @@ Formatters must be installed on your system (conform.nvim does not auto-install 
 | HTML       | `prettier`           | `npm install -g prettier`                |
 | JSON       | `prettier`           | `npm install -g prettier`                |
 | Markdown   | `prettier`           | `npm install -g prettier`                |
+| Go         | `gofumpt`            | `go install mvdan.cc/gofumpt@latest`     |
 | Java       | `google-java-format` | [GitHub Releases](https://github.com/google/google-java-format/releases) |
+| Kotlin     | `ktlint`             | `brew install ktlint`                    |
 | Lua        | `stylua`             | `cargo install stylua` or `brew install stylua` |
 | Python     | `black`              | `pip install black`                      |
 | Rust       | `rustfmt`            | `rustup component add rustfmt`           |
-| Shell      | `shfmt`              | `sudo pacman -S shfmt` or `go install mvdan.cc/sh/v3/cmd/shfmt@latest` |
+| Shell      | `shfmt`              | `brew install shfmt` or `go install mvdan.cc/sh/v3/cmd/shfmt@latest` |
+| SQL        | `sql-formatter`      | `npm install -g sql-formatter`           |
 
 ### Tree-sitter
 The `nvim-treesitter` plugin (main branch) requires the **Tree-sitter CLI** to compile parsers:
@@ -56,9 +78,12 @@ The `nvim-treesitter` plugin (main branch) requires the **Tree-sitter CLI** to c
 Parsers are compiled on first launch and cached for subsequent sessions.
 
 ### System Requirements
-- **Tree-sitter CLI** - Required for compiling treesitter parsers
-- **Node.js/npm** - Required for `prettier` and several LSP servers
-- **Python/pip** - Required for `black` and `pyright`
+Only needed for the languages you leave enabled (see [languages_local.md](languages_local.md)):
+
+- **Tree-sitter CLI** - Required for compiling treesitter parsers (always needed)
+- **Node.js/npm** - Required for `prettier` and the `cssls`/`html`/`jsonls`/`ts_ls`/`pyright` servers
+- **Python/pip** - Required for `black`
+- **Go** - Required for `gopls` and `gofumpt`
 - **Rust/Cargo** - Required for `stylua`, `rustfmt`, and `rust_analyzer`
 - **Java JDK** - Required for `jdtls` and `google-java-format`
 

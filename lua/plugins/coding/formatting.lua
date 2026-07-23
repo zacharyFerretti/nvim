@@ -2,19 +2,8 @@ return {
   "stevearc/conform.nvim",
   config = function()
     require("conform").setup({
-      formatters_by_ft = {
-        css = { "prettier" },
-        html = { "prettier" },
-        java = { "google-java-format" },
-        json = { "prettier" },
-        kotlin = { "ktlint" },
-        lua = { "stylua" },
-        markdown = { "prettier" },
-        python = { "black" },
-        rust = { "rustfmt" },
-        sh = { "shfmt" },
-        sql = { "sql_formatter" },
-      },
+      -- Only formatters for languages enabled on this machine (see config.languages)
+      formatters_by_ft = require("config.languages").formatters_by_ft(),
       formatters = {
         shfmt = {
           prepend_args = { "-i", "4" },

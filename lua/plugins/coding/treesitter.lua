@@ -6,22 +6,9 @@ return {
     local ts_runtime = require("nvim-treesitter.install").get_package_path("runtime")
     vim.opt.rtp:prepend(ts_runtime)
 
-    require("nvim-treesitter.install").install({
-      "bash",
-      "css",
-      "html",
-      "java",
-      "javascript",
-      "json",
-      "lua",
-      "markdown",
-      "markdown_inline",
-      "python",
-      "rust",
-      "typescript",
-      "vim",
-      "vimdoc",
-    })
+    -- Parsers for every known language (highlighting is runtime-independent, so
+    -- it stays on even for languages disabled in config.languages)
+    require("nvim-treesitter.install").install(require("config.languages").treesitter_parsers())
 
     -- Start treesitter highlighting on every buffer with a parser
     vim.api.nvim_create_autocmd("FileType", {

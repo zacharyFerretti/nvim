@@ -1,3 +1,8 @@
+-- Skip jdtls entirely on machines where Java is disabled (no JDK / no jdtls)
+if not require("config.languages").is_enabled("java") then
+  return
+end
+
 local jdtls_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
 local workspace_dir = vim.fn.stdpath("data") .. "/jdtls-workspaces/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
 
